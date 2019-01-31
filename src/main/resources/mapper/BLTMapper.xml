@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="light">
+
+    <parameterMap id="consoleMapper" type="map">
+        <parameter property="prefix_value" mode="IN"/>
+        <parameter property="dmac" mode="IN"/>
+        <parameter property="mesh_id" mode="IN"/>
+        <parameter property="lmac" mode="IN"/>
+        <parameter property="CODE" mode="IN"/>
+        <parameter property="code_version" mode="IN"/>
+        <parameter property="GID" mode="IN"/>
+        <parameter property="x" mode="IN"/>
+        <parameter property="y" mode="IN"/>
+        <parameter property="ctype" mode="IN"/>
+        <parameter property="cid" mode="IN"/>
+        <parameter property="suffix_value" mode="IN"/>
+        <parameter property="result" mode="OUT" jdbcType="INTEGER"/>
+    </parameterMap>
+
+    <select id="getLights" resultType="map">
+        SELECT * FROM f_light_console
+    </select>
+    <insert id="insertLog" parameterType="string">
+        INSERT INTO f_light_console(ip,msg,log_date) VALUE (#{ip},#{msg},now())
+    </insert>
+
+    <select id="saveConsole" parameterMap="consoleMapper" statementType="CALLABLE">
+        CALL save_blt_console(?,?,?,?,?,?,?,?,?,?,?,?,?)
+    </select>
+</mapper>
