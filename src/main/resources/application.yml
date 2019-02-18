@@ -1,15 +1,19 @@
 spring:
+  jms:
+    pub-sub-domain: true
   datasource:
     url: jdbc:mysql://119.3.49.192:3306/light?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-    username: 123456
-    password: 123456
+    username: root
+    password: 1Believe#
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
   rabbitmq:
     host: 122.112.229.195
     port: 5682
-server:
-  port: 9001
+  activemq:
+    broker-url: failover://tcp://119.3.49.192:61616
+    packages:
+      trust-all: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 logging:
@@ -20,6 +24,9 @@ my:
   rabbit:
     queue1: tpad-blt-console-queue
     queue2: tpad-blt-log-queue
+debug: false
+server:
+  port: 9001
 
 
 

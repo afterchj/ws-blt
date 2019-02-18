@@ -15,11 +15,12 @@ public class EchoClient {
     private static Logger logger = LoggerFactory.getLogger(EchoClient.class);
         private static String host = "122.112.229.195";
 //    private static String host = "127.0.0.1";
-    private static int port = 8000;
+    private static int port = 8001;
     private static final int length = 110;
     private Socket socket;
 
-    public EchoClient() {}
+    public EchoClient() {
+    }
 
     public EchoClient(Socket socket) throws IOException {
         this.socket = socket;
@@ -44,7 +45,7 @@ public class EchoClient {
             String msg;
             while ((msg = localReader.readLine()) != null) {
                 pw.println(msg);
-                logger.info(br.readLine());
+                logger.info("receive message:" + br.readLine());
                 if (msg.equals("bye"))
                     break;
             }
