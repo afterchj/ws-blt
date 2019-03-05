@@ -1,5 +1,8 @@
 package com.tpadsz.socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -11,14 +14,15 @@ import java.util.Scanner;
  */
 
 public class ChatClient {
+    private Logger logger = LoggerFactory.getLogger(ChatClient.class);
     private PrintWriter pw;
     private BufferedReader br;
     private Scanner scan;
     private Socket s;
 
     public ChatClient() throws IOException {
-//        s = new Socket("127.0.0.1", 8001);
-        s = new Socket("122.112.229.195", 8001);
+        s = new Socket("127.0.0.1", 8000);
+//        s = new Socket("122.112.229.195", 8001);
     }
 
     public static void main(String[] args) throws IOException {
@@ -35,12 +39,14 @@ public class ChatClient {
             public void run() {
                 while (true) {
                     try {
-                        if (!s.isClosed()) {
-                            System.out.println("from server:" + br.readLine());
+                        if (s.isClosed()) {
+                            System.exit(0);
+                        } else {
+                            logger.info("from server:" + br.readLine());
                         }
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        logger.info("status:" + e.getMessage());
                     }
                 }
             }
@@ -50,11 +56,10 @@ public class ChatClient {
         System.out.println("请输入内容：");
         while (true) {
             String read = scan.nextLine();
+            pw.println(read);
             if (read.equalsIgnoreCase("quit")) {
                 s.close();
             }
-            //System.out.println(read);
-            pw.println(read);
         }
     }
 

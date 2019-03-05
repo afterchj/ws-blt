@@ -35,10 +35,10 @@ public class ActiveConfig {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory(@Value("${spring.activemq.broker-url}") String url) {
+    public ConnectionFactory connectionFactory() {
 //        System.out.println("spring.activemq.broker-url=" + url);
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
-        connectionFactory.setBrokerURL(url);
+        connectionFactory.setBrokerURL("failover://tcp://119.3.49.192:61616");
         connectionFactory.setUserName("tpad");
         connectionFactory.setPassword("Tp123456");
         connectionFactory.setTrustAllPackages(true);

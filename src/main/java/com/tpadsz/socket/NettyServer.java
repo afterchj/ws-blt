@@ -36,23 +36,26 @@ public class NettyServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             logger.info("新客户端链接IP:" + ch.localAddress().getHostName() + ",Port:" + ch.localAddress().getPort());
-                            ch.pipeline().addLast(new StringEncoder(Charset.forName("GBK")));
+                            ch.pipeline().addLast(new StringEncoder(Charset.forName("utf-8")));
                             ch.pipeline().addLast(new MyServerHandler()); // 客户端触发操作
                             ch.pipeline().addLast(new ByteArrayEncoder());
                         }
                     });
             ChannelFuture cf = sb.bind().sync(); // 服务器异步创建绑定
-            cf.channel().closeFuture().sync(); // 关闭服务器通道
+            logger.info("端口[" + port + "]绑定成功!");
+            // 关闭服务器通道
+//            cf.channel().closeFuture().sync();
         } catch (Exception e) {
             logger.error("异常：" + e.getMessage());
-        } finally {
-            try {
-                group.shutdownGracefully().sync(); // 释放线程池资源
-                bossGroup.shutdownGracefully().sync();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
+// finally {
+//            try {
+//                group.shutdownGracefully().sync(); // 释放线程池资源
+//                bossGroup.shutdownGracefully().sync();
+//            } catch (InterruptedException e) {
+//                logger.error("InterruptedException:" + e.getMessage());
+//            }
+//        }
 
     }
 
