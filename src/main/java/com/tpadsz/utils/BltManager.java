@@ -18,7 +18,7 @@ public class BltManager {
     private static SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
 
     public static void saveMap(String msg, String ip) {
-        System.out.println("sqlSessionTemplate=" + sqlSessionTemplate);
+//        System.out.println("sqlSessionTemplate=" + sqlSessionTemplate);
         int len = msg.length();
         if (len >= 36 && len <= 40) {
             tempFormat(msg);

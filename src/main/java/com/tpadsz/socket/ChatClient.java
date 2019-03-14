@@ -21,8 +21,8 @@ public class ChatClient {
     private Socket s;
 
     public ChatClient() throws IOException {
-        s = new Socket("127.0.0.1", 8000);
-//        s = new Socket("122.112.229.195", 8001);
+//        s = new Socket("127.0.0.1", 8001);
+        s = new Socket("122.112.229.195", 8001);
     }
 
     public static void main(String[] args) throws IOException {
