@@ -19,8 +19,9 @@ public class BltManager {
 
     public static void saveMap(String msg, String ip) {
 //        System.out.println("sqlSessionTemplate=" + sqlSessionTemplate);
+        msg = msg.trim();
         int len = msg.length();
-        if (len >= 36 && len <= 40) {
+        if (len >= 22 && len <= 40) {
             tempFormat(msg);
         } else if (len > 40) {
             formatStr(msg);
@@ -35,13 +36,14 @@ public class BltManager {
     public static void tempFormat(String format) {
         String str = format.substring(18, format.length());
         int len = str.length();
+        logger.info("str=" + str + ",len=" + len);
         String prefix = str.substring(0, 2).toUpperCase();
         Map map = new ConcurrentHashMap<>();
         map.put("prefix_value", "03");
         switch (prefix) {
             case "52":
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len - 6, len - 4));
+                map.put("cid", str.substring(len-6, len-4));
                 break;
             case "C0":
                 map.put("ctype", prefix);
@@ -50,15 +52,33 @@ public class BltManager {
                 break;
             case "42":
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len - 4, len - 2));
+                map.put("cid", str.substring(len-4, len-2));
+                break;
+            case "CA":
+                map.put("ctype", prefix);
+                map.put("cid", str.substring(len-2, len));
+                map.put("x", str.substring(len - 2, len));
+                break;
+            case "CB":
+                map.put("ctype", prefix);
+                map.put("cid", str.substring(len-4, len-2));
+                map.put("x", str.substring(len - 2, len));
+                break;
+            case "CC":
+                map.put("ctype", prefix);
+                String tmp = str.substring(2, 4);
+                map.put("cid", tmp);
+                map.put("x", str.substring(4, 8));
+                map.put("y", str.substring(8, len));
                 break;
             default:
                 if ("C1".equals(prefix) || "C4".equals(prefix) || "71".equals(prefix)) {
                     map.put("ctype", prefix);
                     map.put("x", str.substring(2, 4));
                     map.put("y", str.substring(4, 6));
+                    map.put("cid", str.substring(len-4, len-2));
                     if (!"71".equals(prefix)) {
-                        map.put("cid", str.substring(len - 4, len - 2));
+                        map.put("cid", str.substring(2, 4));
                     }
                 }
                 break;
