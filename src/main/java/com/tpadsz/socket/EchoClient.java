@@ -13,10 +13,10 @@ import java.net.Socket;
 public class EchoClient {
 
     private static Logger logger = LoggerFactory.getLogger(EchoClient.class);
-        private static String host = "122.112.229.195";
-//    private static String host = "127.0.0.1";
+//        private static String host = "122.112.229.195";
+    private static String host = "127.0.0.1";
     private static int port = 8001;
-    private static final int length = 110;
+//    private static final int length = 110;
     private Socket socket;
 
     public EchoClient() {
@@ -43,12 +43,17 @@ public class EchoClient {
             PrintWriter pw = getWriter(socket);
             BufferedReader localReader = new BufferedReader(new InputStreamReader(System.in));
             String msg;
-            while ((msg = localReader.readLine()) != null) {
+            while ((msg=localReader.readLine())!=null) {
+                String str = br.readLine();
+                pw.println(socket.getLocalPort()+":"+str);
                 pw.println(msg);
                 logger.info("receive message:" + br.readLine());
                 if (msg.equals("bye"))
                     break;
             }
+            br.close();
+            pw.close();
+            localReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -74,15 +79,6 @@ public class EchoClient {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public static void multiClient() throws Exception {
-        EchoClient client = new EchoClient();
-        final Socket[] sockets = new Socket[length];
-        for (int i = 0; i < length; i++) {  //试图建立100次连接
-            sockets[i] = new Socket(host, port);
-            client.send(sockets[i], "第" + (i + 1) + "个客户端发送的消息！");
         }
     }
 

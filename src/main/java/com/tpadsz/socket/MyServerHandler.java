@@ -31,8 +31,6 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
      * 2017年8月31日 下午7:57:28
      */
     private String getMessage(ByteBuf buf,String ip) {
-        Map map = new HashMap<>();
-        map.put("ip", ip);
         String msg;
         byte[] con = new byte[buf.readableBytes()];
         buf.readBytes(con);

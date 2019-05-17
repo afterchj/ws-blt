@@ -22,9 +22,9 @@ public class ServerMain {
 
     private static Logger logger = LoggerFactory.getLogger(ServerMain.class);
 
-//    public static void main(String[] args) {
-//        new ServerMain().run(8001);
-//    }
+    public static void main(String[] args) {
+        new ServerMain().run(8001);
+    }
 
     public void run(int port) {
         EventLoopGroup acceptor = new NioEventLoopGroup();

@@ -59,8 +59,7 @@ public class NettyServer {
 
     }
 
-//    public static void main(String[] args) throws InterruptedException {
-//        start(8000);
-//        start(8001);
-//    }
+    public static void main(String[] args) throws InterruptedException {
+        start(8001);
+    }
 }
