@@ -25,7 +25,8 @@ public class ClientMain {
 	}
 
 	public static void main(String[] args) throws IOException {
-		new ClientMain("122.112.229.195", 8000).run();
+//		new ClientMain("122.112.229.195", 8000).run();
+		new ClientMain("119.3.49.192", 8000).run();
 //		new ClientMain("127.0.0.1", 8000).run();
 	}
 
@@ -37,14 +38,12 @@ public class ClientMain {
 		//指定所使用的 NIO 传输 Channel
 		bootstrap.channel(NioSocketChannel.class);
 		bootstrap.handler(new ClientInitialHandler());
-
 		try {
 		    //使用指定的 端口设置套 接字地址
 			Channel channel = bootstrap.connect(host, port).sync().channel();
 			while (true) {
 			    //向服务端发送内容
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(System.in));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				String input = reader.readLine();
 				if (input != null) {
 					if ("quit".equals(input)) {

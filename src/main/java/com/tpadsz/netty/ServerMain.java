@@ -1,6 +1,5 @@
 package com.tpadsz.netty;
 
-import com.tpadsz.socket.EchoClient;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;

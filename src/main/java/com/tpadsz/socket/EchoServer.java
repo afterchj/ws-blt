@@ -108,7 +108,6 @@ public class EchoServer {
             String msg;
             try {
                 while ((msg = br.readLine()) != null) {
-                    logger.info("send message " + msg);
                     send(msg);
                 }
             } catch (IOException e) {

@@ -38,12 +38,13 @@ public class BltManager {
         int len = str.length();
         logger.info("str=" + str + ",len=" + len);
         String prefix = str.substring(0, 2).toUpperCase();
+        String tmp = str.substring(2, 4);
         Map map = new ConcurrentHashMap<>();
         map.put("prefix_value", "03");
         switch (prefix) {
             case "52":
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len-6, len-4));
+                map.put("cid", str.substring(len - 6, len - 4));
                 break;
             case "C0":
                 map.put("ctype", prefix);
@@ -52,31 +53,30 @@ public class BltManager {
                 break;
             case "42":
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len-4, len-2));
+                map.put("cid", str.substring(len - 4, len - 2));
                 break;
             case "CA":
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len-2, len));
-                map.put("x", str.substring(len - 2, len));
+                map.put("cid", tmp);
+                map.put("x", tmp);
                 break;
             case "CB":
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len-4, len-2));
-                map.put("x", str.substring(len - 2, len));
+                map.put("cid", tmp);
+                map.put("x", tmp);
                 break;
             case "CC":
                 map.put("ctype", prefix);
-                String tmp = str.substring(2, 4);
                 map.put("cid", tmp);
                 map.put("x", str.substring(4, 8));
-                map.put("y", str.substring(8, len));
+                map.put("y", str.substring(8, 12));
                 break;
             default:
                 if ("C1".equals(prefix) || "C4".equals(prefix) || "71".equals(prefix)) {
                     map.put("ctype", prefix);
                     map.put("x", str.substring(2, 4));
                     map.put("y", str.substring(4, 6));
-                    map.put("cid", str.substring(len-4, len-2));
+                    map.put("cid", str.substring(len - 4, len - 2));
                     if (!"71".equals(prefix)) {
                         map.put("cid", str.substring(2, 4));
                     }

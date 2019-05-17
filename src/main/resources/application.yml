@@ -16,17 +16,17 @@ spring:
       trust-all: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-logging:
-    level:
-      root: info
-    file: log/blt.log
+#logging:
+#    level:
+#      root: info
+#    file: log/blt.log
 my:
   rabbit:
     queue1: tpad-blt-console-queue
     queue2: tpad-blt-log-queue
 debug: false
 server:
-  port: 9001
+  port: 9002
 
 
 

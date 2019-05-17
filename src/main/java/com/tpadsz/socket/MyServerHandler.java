@@ -39,7 +39,6 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         try {
             msg = new String(con, "UTF-8");
             BltManager.saveMap(msg, ip);
-            logger.info("send message " + msg);
         } catch (UnsupportedEncodingException e) {
             logger.error("UnsupportedEncodingException：" + e.getMessage());
             return null;
