@@ -2,7 +2,7 @@ spring:
   jms:
     pub-sub-domain: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/light?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://119.3.49.192:3306/light?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
     username: root
     password: 1Believe#
     type: com.alibaba.druid.pool.DruidDataSource
