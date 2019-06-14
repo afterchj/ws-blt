@@ -20,9 +20,6 @@ public class MyClientHandler extends SimpleChannelInboundHandler<String> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         logger.info("ip:" + ctx.channel().remoteAddress() + ",client output: " + msg);
-        Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-        ctx.writeAndFlush("from client: " + str);
     }
 
     @Override

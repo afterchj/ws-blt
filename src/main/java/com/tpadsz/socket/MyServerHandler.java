@@ -26,9 +26,8 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
     /**
      * @param buf
      * @return
-     * @author after
+     * @author hongjian.chen
      * TODO  此处用来处理收到的数据中含有中文的时  出现乱码的问题
-     * 2017年8月31日 下午7:57:28
      */
     private String getMessage(ByteBuf buf,String ip) {
         String msg;
@@ -36,7 +35,7 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         buf.readBytes(con);
         try {
             msg = new String(con, "UTF-8");
-            BltManager.saveMap(msg, ip);
+//            BltManager.saveMap(msg, ip);
         } catch (UnsupportedEncodingException e) {
             logger.error("UnsupportedEncodingException：" + e.getMessage());
             return null;

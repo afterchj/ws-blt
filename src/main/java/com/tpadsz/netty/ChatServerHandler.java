@@ -9,15 +9,14 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.annotation.JmsListener;
-import org.springframework.stereotype.Component;
-
-import javax.jms.JMSException;
 
 /**
  * 服务器主要的业务逻辑
+ *
+ * @author hongjian.chen
+ * @version time：2018/2/28.
  */
-@Component
+
 @ChannelHandler.Sharable
 public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 

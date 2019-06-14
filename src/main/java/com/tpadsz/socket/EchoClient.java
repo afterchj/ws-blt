@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Created by hongjian.chen on 2018/2/28.
+ * Created by hongjian.chen on 2018/2/18.
  */
 
 public class EchoClient {
@@ -37,40 +37,21 @@ public class EchoClient {
     }
 
     public void talk() throws IOException {
-        System.out.println("请输入内容：");
         try {
             BufferedReader br = getReader(socket);
             PrintWriter pw = getWriter(socket);
             BufferedReader localReader = new BufferedReader(new InputStreamReader(System.in));
-            String msg;
-            while ((msg=localReader.readLine())!=null) {
-                String str = br.readLine();
-                pw.println(socket.getLocalPort()+":"+str);
+            String msg ;
+            System.out.println("请输入指令：");
+            while ((msg = localReader.readLine()) != null) {
                 pw.println(msg);
-                logger.info("receive message:" + br.readLine());
+                System.out.println(socket.getLocalPort()+":"+br.readLine());
                 if (msg.equals("bye"))
                     break;
             }
-            br.close();
             pw.close();
             localReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void send(Socket socket, String msg) {
-        try {
-            BufferedReader br = getReader(socket);
-            PrintWriter pw = getWriter(socket);
-            pw.println(msg);
-            System.out.println(br.readLine());
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -84,7 +65,6 @@ public class EchoClient {
 
     public static void main(String args[]) throws Exception {
 //        multiClient();
-        Socket socket = new Socket(host, port);
-        new EchoClient(socket).talk();
+        new EchoClient(new Socket("localhost",8001)).talk();
     }
 }

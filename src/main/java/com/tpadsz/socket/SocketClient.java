@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class SocketClient {
     private String host = "localhost";
-    private int port = 8001;
+    private int port = 8000;
     private Socket socket;
 
     public SocketClient() throws IOException {

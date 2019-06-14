@@ -12,10 +12,8 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 多人聊天例子服务器
- *
- * @author lkj41110
- * @version time：2017年1月16日 下午9:54:55
+ * @author hongjian.chen
+ * @version time：2018/2/28.
  */
 public class ServerMain {
 
