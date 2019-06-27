@@ -34,49 +34,56 @@ public class BltManager {
     }
 
     public static void tempFormat(String format) {
-        String str = format.substring(18, format.length());
+        String str = format.substring(18);
         int len = str.length();
         logger.info("str=" + str + ",len=" + len);
         String prefix = str.substring(0, 2).toUpperCase();
         String tmp = str.substring(2, 4);
+        String cid=str.substring(len - 4, len - 2);
         Map map = new ConcurrentHashMap<>();
         map.put("prefix_value", "03");
         switch (prefix) {
-            case "52":
+            case "52"://52表示遥控器控制命令，01,02字段固定，01表示开，02表示关
                 map.put("ctype", prefix);
                 map.put("cid", str.substring(len - 6, len - 4));
                 break;
-            case "C0":
+            case "C0"://pad或手机，C0代表全控，37 37字段是x、y值
                 map.put("ctype", prefix);
                 map.put("x", str.substring(4, 6));
                 map.put("y", str.substring(6, 8));
                 break;
-            case "42":
+            case "42": //42代表场景控制，02字段是场景ID
                 map.put("ctype", prefix);
-                map.put("cid", str.substring(len - 4, len - 2));
+                map.put("cid", cid);
                 break;
             case "CA":
+                //门磁,77 04 0E 02 20 9D 01 00 00 CA 00  关门,77 04 0E 02 20 9D 01 00 00 CA 01   开门
                 map.put("ctype", prefix);
-                map.put("cid", tmp);
+                map.put("cid", prefix);
                 map.put("x", tmp);
                 break;
             case "CB":
+//                人感 ,77 04 0E 02 20 9D 01 00 00 CB 00  无人,77 04 0E 02 20 9D 01 00 00 CB 01  有人
                 map.put("ctype", prefix);
-                map.put("cid", tmp);
+                map.put("cid", "CB");
                 map.put("x", tmp);
                 break;
             case "CC":
+//                温湿度 77 04 0E 02 20 9D 01 00 00 CC, 温度 00 00 湿度  00 00
                 map.put("ctype", prefix);
                 map.put("cid", tmp);
                 map.put("x", str.substring(4, 8));
                 map.put("y", str.substring(8, 12));
                 break;
             default:
+                //C1代表组控，32 32字段是x、y值, 02字段是组ID
+//                RGB组控77 04 10 02 20 95 00 00 00 C4 5F 02 00 00 00 00 00 00 02 4F
+//                灯状态信息77 04 0F 02 27 35 00 00 00 71 00 13 00 00 00 00 00 00 0E
                 if ("C1".equals(prefix) || "C4".equals(prefix) || "71".equals(prefix)) {
                     map.put("ctype", prefix);
                     map.put("x", str.substring(2, 4));
                     map.put("y", str.substring(4, 6));
-                    map.put("cid", str.substring(len - 4, len - 2));
+                    map.put("cid", cid);
                     if (!"71".equals(prefix)) {
                         map.put("cid", str.substring(2, 4));
                     }
