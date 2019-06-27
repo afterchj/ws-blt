@@ -46,11 +46,11 @@ public class ActiveConfig {
     }
     // topic模式的ListenerContainer
     @Bean
-    public JmsListenerContainerFactory<?> jmsListenerContainerTopic(ConnectionFactory activeMQConnectionFactory) {
+    public JmsListenerContainerFactory<?> jmsListenerContainerTopic(ConnectionFactory connectionFactory) {
         DefaultJmsListenerContainerFactory bean = new DefaultJmsListenerContainerFactory();
         //开启topic支持
         bean.setPubSubDomain(true);
-        bean.setConnectionFactory(activeMQConnectionFactory);
+        bean.setConnectionFactory(connectionFactory);
         return bean;
     }
     // queue模式的ListenerContainer
