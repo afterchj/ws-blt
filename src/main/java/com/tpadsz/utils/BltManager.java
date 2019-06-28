@@ -1,5 +1,6 @@
 package com.tpadsz.utils;
 
+import com.alibaba.fastjson.JSON;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,9 +85,6 @@ public class BltManager {
                     map.put("x", str.substring(2, 4));
                     map.put("y", str.substring(4, 6));
                     map.put("cid", cid);
-                    if (!"71".equals(prefix)) {
-                        map.put("cid", str.substring(2, 4));
-                    }
                 }
                 break;
         }
@@ -123,7 +121,12 @@ public class BltManager {
                 }
                 break;
         }
-        sqlSessionTemplate.selectOne("light.saveConsole", map);
-        logger.info("result=" + map.get("result"));
+//        sqlSessionTemplate.selectOne("light.saveConsole", map);
+//        logger.info("result=" + map.get("result"));
+        logger.info("result=" + JSON.toJSONString(map));
+    }
+
+    public static void main(String[] args) {
+        formatStr("03F0ACD700950108080808000000000000c1011010");
     }
 }
