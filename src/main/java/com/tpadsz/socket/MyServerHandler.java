@@ -9,8 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.SocketAddress;
 
 
 /**
@@ -20,16 +19,18 @@ import java.util.Map;
 public class MyServerHandler extends ChannelInboundHandlerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(MyServerHandler.class);
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        logger.info(ctx.channel().localAddress().toString() + " 通道已激活！");
+
+    public void channelActive(ChannelHandlerContext ctx) {
+        logger.info("通道已激活！");
     }
+
     /**
      * @param buf
      * @return
      * @author hongjian.chen
      * TODO  此处用来处理收到的数据中含有中文的时  出现乱码的问题
      */
-    private String getMessage(ByteBuf buf,String ip) {
+    private String getMessage(ByteBuf buf, String ip) {
         String msg;
         byte[] con = new byte[buf.readableBytes()];
         buf.readBytes(con);
@@ -47,13 +48,16 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
      * 功能：读取服务器发送过来的信息
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg){
         // 第一种：接收字符串时的处理
         Channel channel = ctx.channel();
+        SocketAddress address = channel.remoteAddress();
+        logger.info("[" + address + "] receive:" + msg);
+        String str = address.toString();
+        String ip = str.substring(1, str.indexOf(":"));
         ByteBuf buf = (ByteBuf) msg;
-        String rev = getMessage(buf,channel.remoteAddress().toString());
+        String rev = getMessage(buf, ip);
         ctx.writeAndFlush(rev);
-        logger.info("receive from client:" + rev);
     }
 
     /**

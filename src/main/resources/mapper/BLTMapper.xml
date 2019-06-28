@@ -3,6 +3,7 @@
 <mapper namespace="light">
 
     <parameterMap id="consoleMapper" type="map">
+        <parameter property="host" mode="IN"/>
         <parameter property="prefix_value" mode="IN"/>
         <parameter property="dmac" mode="IN"/>
         <parameter property="mesh_id" mode="IN"/>
@@ -26,6 +27,6 @@
     </insert>
 
     <select id="saveConsole" parameterMap="consoleMapper" statementType="CALLABLE">
-        CALL save_blt_console(?,?,?,?,?,?,?,?,?,?,?,?,?)
+        CALL save_blt_console(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     </select>
 </mapper>

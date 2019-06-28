@@ -23,9 +23,9 @@ public class BltManager {
         msg = msg.trim();
         int len = msg.length();
         if (len >= 22 && len <= 40) {
-            tempFormat(msg);
+            tempFormat(msg, ip);
         } else if (len > 40) {
-            formatStr(msg);
+            formatStr(msg, ip);
         } else {
             Map map = new HashMap();
             map.put("ip", ip);
@@ -34,14 +34,14 @@ public class BltManager {
         }
     }
 
-    public static void tempFormat(String format) {
+    public static void tempFormat(String format, String ip) {
         String str = format.substring(18);
         int len = str.length();
-        logger.info("str=" + str + ",len=" + len);
         String prefix = str.substring(0, 2).toUpperCase();
         String tmp = str.substring(2, 4);
-        String cid=str.substring(len - 4, len - 2);
+        String cid = str.substring(len - 4, len - 2);
         Map map = new ConcurrentHashMap<>();
+        map.put("host", ip);
         map.put("prefix_value", "03");
         switch (prefix) {
             case "52"://52表示遥控器控制命令，01,02字段固定，01表示开，02表示关
@@ -93,9 +93,10 @@ public class BltManager {
         logger.info("result=" + map.get("result"));
     }
 
-    private static void formatStr(String str) {
+    private static void formatStr(String str, String ip) {
         Map map = new ConcurrentHashMap<>();
         String prefix = str.substring(0, 2);
+        map.put("host", ip);
         map.put("prefix_value", prefix);
         map.put("dmac", str.substring(2, 14));
         map.put("mesh_id", str.substring(14, 22));
@@ -104,20 +105,20 @@ public class BltManager {
         switch (prefix) {
             case "01":
                 map.put("code", str.substring(34, 38));
-                map.put("code_version", str.substring(38, str.length()));
+                map.put("code_version", str.substring(38));
                 break;
             case "02":
                 map.put("GID", str.substring(34, 36));
                 map.put("x", str.substring(36, 38));
                 map.put("y", str.substring(38, 40));
-                map.put("suffix_value", str.substring(40, str.length()));
+                map.put("suffix_value", str.substring(40));
                 break;
             default:
                 if ("03".equals(prefix)) {
                     map.put("ctype", str.substring(34, 36));
                     map.put("cid", str.substring(36, 38));
                     map.put("x", str.substring(38, 40));
-                    map.put("y", str.substring(40, str.length()));
+                    map.put("y", str.substring(40));
                 }
                 break;
         }
@@ -127,6 +128,7 @@ public class BltManager {
     }
 
     public static void main(String[] args) {
-        formatStr("03F0ACD700950108080808000000000000c1011010");
+        saveMap("77041002209D010000C13232000000000000021E","127.0.0.1");
+//        formatStr("03F0ACD700950108080808000000000000c1011010", "");
     }
 }

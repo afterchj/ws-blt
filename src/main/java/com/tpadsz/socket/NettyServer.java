@@ -35,7 +35,6 @@ public class NettyServer {
 
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            logger.info("新客户端链接IP:" + ch.localAddress().getHostName() + ",Port:" + ch.localAddress().getPort());
                             ch.pipeline().addLast(new StringEncoder(Charset.forName("utf-8")));
                             ch.pipeline().addLast(new MyServerHandler()); // 客户端触发操作
                             ch.pipeline().addLast(new ByteArrayEncoder());

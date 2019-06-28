@@ -25,9 +25,9 @@ public class ClientMain {
 	}
 
 	public static void main(String[] args) throws IOException {
-//		new ClientMain("122.112.229.195", 8000).run();
+		new ClientMain("122.112.229.195", 8000).run();
 //		new ClientMain("119.3.49.192", 8000).run();
-		new ClientMain("127.0.0.1", 8001).run();
+//		new ClientMain("127.0.0.1", 8000).run();
 	}
 
 	public void run() throws IOException {
